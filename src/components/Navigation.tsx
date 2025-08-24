@@ -58,10 +58,10 @@ export default function Navigation({
             >
               <div className={`w-8 h-8 rounded-full ${
                 theme === 'designer' 
-                  ? 'bg-warm-coral' 
-                  : 'bg-electric-blue'
+                  ? 'bg-sky-blue' 
+                  : 'bg-teal'
               }`} />
-              <span className="font-playfair text-xl font-bold">
+              <span className="font-playfair text-xl font-bold text-navy">
                 Digital Craftsman
               </span>
             </motion.div>
@@ -76,7 +76,7 @@ export default function Navigation({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -2 }}
-                  className="text-sm font-medium hover:text-electric-blue transition-colors"
+                  className="text-sm font-medium text-navy hover:text-teal transition-colors"
                 >
                   {item.name}
                 </motion.a>
@@ -92,8 +92,8 @@ export default function Navigation({
                 onClick={onThemeToggle}
                 className={`p-2 rounded-full transition-colors ${
                   theme === 'designer' 
-                    ? 'bg-warm-coral/20 text-warm-coral' 
-                    : 'bg-electric-blue/20 text-electric-blue'
+                    ? 'bg-sky-blue/20 text-teal' 
+                    : 'bg-teal/20 text-navy'
                 }`}
                 title={`Switch to ${theme === 'designer' ? 'Automation' : 'Designer'} mode`}
               >
@@ -105,7 +105,7 @@ export default function Navigation({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onDarkModeToggle}
-                className="p-2 rounded-full bg-charcoal/10 text-charcoal hover:bg-charcoal/20 transition-colors"
+                className="p-2 rounded-full bg-navy/10 text-navy hover:bg-navy/20 transition-colors"
                 title={`Switch to ${isDarkMode ? 'Light' : 'Dark'} mode`}
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -117,7 +117,7 @@ export default function Navigation({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-full bg-charcoal/10 text-charcoal"
+              className="md:hidden p-2 rounded-full bg-navy/10 text-navy"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -137,14 +137,14 @@ export default function Navigation({
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-8">
-                <span className="font-playfair text-xl font-bold">
+                <span className="font-playfair text-xl font-bold text-navy">
                   Menu
                 </span>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full bg-charcoal/10 text-charcoal"
+                  className="p-2 rounded-full bg-navy/10 text-navy"
                 >
                   <X size={24} />
                 </motion.button>
@@ -160,7 +160,7 @@ export default function Navigation({
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => setIsOpen(false)}
-                    className="block text-lg font-medium hover:text-electric-blue transition-colors py-2"
+                    className="block text-lg font-medium text-navy hover:text-teal transition-colors py-2"
                   >
                     {item.name}
                   </motion.a>
@@ -168,15 +168,15 @@ export default function Navigation({
               </div>
 
               {/* Mobile Controls */}
-              <div className="flex items-center space-x-4 mt-8 pt-8 border-t border-charcoal/10">
+              <div className="flex items-center space-x-4 mt-8 pt-8 border-t border-navy/10">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onThemeToggle}
                   className={`flex-1 py-3 px-4 rounded-lg transition-colors ${
                     theme === 'designer' 
-                      ? 'bg-warm-coral/20 text-warm-coral' 
-                      : 'bg-electric-blue/20 text-electric-blue'
+                      ? 'bg-sky-blue/20 text-teal' 
+                      : 'bg-teal/20 text-navy'
                   }`}
                 >
                   {theme === 'designer' ? 'Automation Mode' : 'Designer Mode'}
@@ -186,7 +186,7 @@ export default function Navigation({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onDarkModeToggle}
-                  className="flex-1 py-3 px-4 rounded-lg bg-charcoal/10 text-charcoal hover:bg-charcoal/20 transition-colors"
+                  className="flex-1 py-3 px-4 rounded-lg bg-navy/10 text-navy hover:bg-navy/20 transition-colors"
                 >
                   {isDarkMode ? 'Light Mode' : 'Dark Mode'}
                 </motion.button>

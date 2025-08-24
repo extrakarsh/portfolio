@@ -108,7 +108,7 @@ export default function CustomCursor() {
       height: 40,
       width: 40,
       scale: 1,
-      backgroundColor: '#0066ff',
+      backgroundColor: '#567C8D', // teal
       borderRadius: '50%',
       filter: 'blur(0px)',
     },
@@ -118,7 +118,7 @@ export default function CustomCursor() {
       height: 50,
       width: 50,
       scale: 1.2,
-      backgroundColor: '#ff6b6b',
+      backgroundColor: '#C8D9E6', // sky-blue
       borderRadius: '50%',
       filter: 'blur(1px)',
     },
@@ -128,7 +128,7 @@ export default function CustomCursor() {
       height: 60,
       width: 60,
       scale: 1.5,
-      backgroundColor: '#32d74b',
+      backgroundColor: '#2F4156', // navy
       borderRadius: '50%',
       filter: 'blur(2px)',
     },
@@ -173,7 +173,7 @@ export default function CustomCursor() {
         }}
       >
         <div 
-          className="w-6 h-6 bg-electric-blue/60"
+          className="w-6 h-6 bg-teal/60"
           style={{ borderRadius: '50%' }}
         />
       </motion.div>
@@ -198,7 +198,7 @@ export default function CustomCursor() {
         }}
       >
         <div 
-          className="w-4 h-4 bg-electric-blue/40"
+          className="w-4 h-4 bg-sky-blue/40"
           style={{ borderRadius: '50%' }}
         />
       </motion.div>
@@ -216,7 +216,7 @@ export default function CustomCursor() {
           exit={{ scale: 0, opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="w-16 h-16 border-2 border-electric-blue rounded-full" />
+          <div className="w-16 h-16 border-2 border-teal rounded-full" />
         </motion.div>
       )}
     </>
