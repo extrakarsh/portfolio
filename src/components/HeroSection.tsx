@@ -193,7 +193,7 @@ export default function HeroSection({ theme }: HeroSectionProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="cinematic-title text-hero mb-6 stagger-text cinematic-fade-in"
+          className="font-playfair text-hero font-bold mb-6 stagger-text"
         >
           {currentTheme.title.split('').map((letter, index) => (
             <motion.span
@@ -213,7 +213,7 @@ export default function HeroSection({ theme }: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="cinematic-subtitle text-subtitle mb-6"
+          className="font-playfair text-subtitle font-medium text-medium-grey mb-6"
         >
           {currentTheme.subtitle}
         </motion.h2>
@@ -223,7 +223,7 @@ export default function HeroSection({ theme }: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="cinematic-accent text-body text-charcoal mb-12 max-w-2xl mx-auto leading-relaxed"
+          className="font-inter text-body text-charcoal mb-12 max-w-2xl mx-auto leading-relaxed"
         >
           {currentTheme.description}
         </motion.p>
@@ -260,34 +260,6 @@ export default function HeroSection({ theme }: HeroSectionProps) {
               }}
             />
           </motion.button>
-        </motion.div>
-
-        {/* Font Showcase */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="mt-16 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20"
-        >
-          <h3 className="cinematic-accent text-lg mb-4 text-center">Cinematic Typography</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="space-y-2">
-              <div className="cinematic-title text-sm">Runiga</div>
-              <div className="text-xs text-medium-grey">Bold & Dramatic</div>
-            </div>
-            <div className="space-y-2">
-              <div className="cinematic-subtitle text-sm">Gadianio</div>
-              <div className="text-xs text-medium-grey">Elegant & Refined</div>
-            </div>
-            <div className="space-y-2">
-              <div className="cinematic-accent text-sm">Sellendra</div>
-              <div className="text-xs text-medium-grey">Modern & Clean</div>
-            </div>
-            <div className="space-y-2">
-              <div className="cinematic-display text-sm">Mallong</div>
-              <div className="text-xs text-medium-grey">Impact & Power</div>
-            </div>
-          </div>
         </motion.div>
 
         {/* Scroll Indicator */}

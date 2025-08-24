@@ -7,10 +7,20 @@ export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [cursorVariant, setCursorVariant] = useState('default');
+  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
+  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      const newPosition = { x: e.clientX, y: e.clientY };
+      const newVelocity = {
+        x: newPosition.x - lastPosition.x,
+        y: newPosition.y - lastPosition.y
+      };
+      
+      setVelocity(newVelocity);
+      setLastPosition(newPosition);
+      setMousePosition(newPosition);
     };
 
     const handleMouseEnter = () => {
@@ -70,70 +80,127 @@ export default function CustomCursor() {
         button.removeEventListener('mouseleave', handleButtonLeave);
       });
     };
-  }, []);
+  }, [lastPosition]);
+
+  // Calculate blob shape based on velocity
+  const getBlobShape = () => {
+    const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+    const maxSpeed = 50;
+    const normalizedSpeed = Math.min(speed / maxSpeed, 1);
+    
+    // Create blob path based on speed
+    const radius = 20 + normalizedSpeed * 15;
+    const squishX = 1 + normalizedSpeed * 0.5;
+    const squishY = 1 - normalizedSpeed * 0.3;
+    
+    return {
+      width: radius * 2 * squishX,
+      height: radius * 2 * squishY,
+      borderRadius: `${radius}px`,
+      transform: `scale(${1 + normalizedSpeed * 0.2})`,
+    };
+  };
 
   const cursorVariants = {
     default: {
-      x: mousePosition.x - 10,
-      y: mousePosition.y - 10,
-      height: 20,
-      width: 20,
-      scale: 1,
-      backgroundColor: '#0066ff',
-    },
-    link: {
-      x: mousePosition.x - 15,
-      y: mousePosition.y - 15,
-      height: 30,
-      width: 30,
-      scale: 1.5,
-      backgroundColor: '#ff6b6b',
-    },
-    button: {
       x: mousePosition.x - 20,
       y: mousePosition.y - 20,
       height: 40,
       width: 40,
-      scale: 2,
+      scale: 1,
+      backgroundColor: '#0066ff',
+      borderRadius: '50%',
+      filter: 'blur(0px)',
+    },
+    link: {
+      x: mousePosition.x - 25,
+      y: mousePosition.y - 25,
+      height: 50,
+      width: 50,
+      scale: 1.2,
+      backgroundColor: '#ff6b6b',
+      borderRadius: '50%',
+      filter: 'blur(1px)',
+    },
+    button: {
+      x: mousePosition.x - 30,
+      y: mousePosition.y - 30,
+      height: 60,
+      width: 60,
+      scale: 1.5,
       backgroundColor: '#32d74b',
+      borderRadius: '50%',
+      filter: 'blur(2px)',
     },
   };
 
   if (!isHovering) return null;
 
+  const blobStyle = getBlobShape();
+
   return (
     <>
-      {/* Main Cursor */}
+      {/* Main Blob Cursor */}
       <motion.div
         className="fixed pointer-events-none z-cursor mix-blend-difference"
         variants={cursorVariants}
         animate={cursorVariant}
+        style={blobStyle}
         transition={{
           type: 'spring',
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
+          stiffness: 300,
+          damping: 25,
+          mass: 0.8,
         }}
       />
       
-      {/* Cursor Trail */}
+      {/* Blob Trail */}
       <motion.div
         className="fixed pointer-events-none z-cursor"
         style={{
-          x: mousePosition.x - 5,
-          y: mousePosition.y - 5,
+          x: mousePosition.x - 15,
+          y: mousePosition.y - 15,
         }}
         animate={{
-          scale: [1, 0.8, 0],
-          opacity: [0.5, 0.3, 0],
+          scale: [1, 0.7, 0],
+          opacity: [0.4, 0.2, 0],
+          borderRadius: ['50%', '40%', '30%'],
         }}
         transition={{
-          duration: 0.6,
+          duration: 0.8,
           repeat: Infinity,
           repeatType: 'loop',
         }}
       >
-        <div className="w-2 h-2 bg-electric-blue rounded-full" />
+        <div 
+          className="w-6 h-6 bg-electric-blue/60"
+          style={{ borderRadius: '50%' }}
+        />
+      </motion.div>
+      
+      {/* Secondary Blob Trail */}
+      <motion.div
+        className="fixed pointer-events-none z-cursor"
+        style={{
+          x: mousePosition.x - 10,
+          y: mousePosition.y - 10,
+        }}
+        animate={{
+          scale: [0.8, 0.5, 0],
+          opacity: [0.3, 0.1, 0],
+          borderRadius: ['50%', '45%', '35%'],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+          repeatType: 'loop',
+          delay: 0.2,
+        }}
+      >
+        <div 
+          className="w-4 h-4 bg-electric-blue/40"
+          style={{ borderRadius: '50%' }}
+        />
       </motion.div>
       
       {/* Magnetic Effect Indicator */}
@@ -141,15 +208,15 @@ export default function CustomCursor() {
         <motion.div
           className="fixed pointer-events-none z-cursor"
           style={{
-            x: mousePosition.x - 25,
-            y: mousePosition.y - 25,
+            x: mousePosition.x - 35,
+            y: mousePosition.y - 35,
           }}
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.3 }}
+          animate={{ scale: 1, opacity: 0.2 }}
           exit={{ scale: 0, opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4 }}
         >
-          <div className="w-12 h-12 border border-electric-blue rounded-full" />
+          <div className="w-16 h-16 border-2 border-electric-blue rounded-full" />
         </motion.div>
       )}
     </>

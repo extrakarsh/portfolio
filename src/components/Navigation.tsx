@@ -61,7 +61,7 @@ export default function Navigation({
                   ? 'bg-warm-coral' 
                   : 'bg-electric-blue'
               }`} />
-              <span className="cinematic-display text-xl">
+              <span className="font-playfair text-xl font-bold">
                 Digital Craftsman
               </span>
             </motion.div>
@@ -137,7 +137,7 @@ export default function Navigation({
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-8">
-                <span className="cinematic-display text-xl">
+                <span className="font-playfair text-xl font-bold">
                   Menu
                 </span>
                 <motion.button
