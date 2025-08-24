@@ -1,26 +1,472 @@
-@import "tailwindcss";
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Runiga:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gadianio:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sellendra:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mallong:wght@300;400;500;600;700;800;900&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Color Palette */
+  --color-primary-black: #000000;
+  --color-primary-white: #ffffff;
+  --color-charcoal: #1a1a1a;
+  --color-medium-grey: #808080;
+  --color-light-grey: #f5f5f5;
+  --color-electric-blue: #0066ff;
+  --color-warm-coral: #ff6b6b;
+  --color-lime-green: #32d74b;
+  
+  /* Typography */
+  --font-playfair: 'Playfair Display', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+  --font-runiga: 'Runiga', serif;
+  --font-gadianio: 'Gadianio', serif;
+  --font-sellendra: 'Sellendra', serif;
+  --font-mallong: 'Mallong', serif;
+  
+  /* Spacing */
+  --section-padding: clamp(4rem, 8vw, 8rem);
+  --container-max-width: 1400px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Base Styles */
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-primary-black);
+  background-color: var(--color-primary-white);
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Utility Classes */
+.text-hero {
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.1;
+}
+
+.text-subtitle {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+  line-height: 1.6;
+}
+
+/* Component-specific styles */
+.font-playfair {
+  font-family: var(--font-playfair);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-jetbrains {
+  font-family: var(--font-jetbrains);
+}
+
+.font-runiga {
+  font-family: var(--font-runiga);
+}
+
+.font-gadianio {
+  font-family: var(--font-gadianio);
+}
+
+.font-sellendra {
+  font-family: var(--font-sellendra);
+}
+
+.font-mallong {
+  font-family: var(--font-mallong);
+}
+
+/* Cinematic Text Effects */
+.cinematic-title {
+  font-family: var(--font-runiga);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 
+    0 0 10px rgba(0, 102, 255, 0.5),
+    0 0 20px rgba(0, 102, 255, 0.3),
+    0 0 30px rgba(0, 102, 255, 0.1);
+}
+
+.cinematic-subtitle {
+  font-family: var(--font-gadianio);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-shadow: 
+    0 0 8px rgba(255, 107, 107, 0.4),
+    0 0 16px rgba(255, 107, 107, 0.2);
+}
+
+.cinematic-accent {
+  font-family: var(--font-sellendra);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-shadow: 
+    0 0 6px rgba(50, 215, 75, 0.4),
+    0 0 12px rgba(50, 215, 75, 0.2);
+}
+
+.cinematic-display {
+  font-family: var(--font-mallong);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-shadow: 
+    0 0 15px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(0, 0, 0, 0.4),
+    0 0 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Animated Cinematic Text */
+.cinematic-glow {
+  animation: cinematic-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cinematic-glow {
+  0% {
+    text-shadow: 
+      0 0 10px rgba(0, 102, 255, 0.5),
+      0 0 20px rgba(0, 102, 255, 0.3),
+      0 0 30px rgba(0, 102, 255, 0.1);
+  }
+  100% {
+    text-shadow: 
+      0 0 15px rgba(255, 107, 107, 0.6),
+      0 0 25px rgba(255, 107, 107, 0.4),
+      0 0 35px rgba(255, 107, 107, 0.2);
+  }
+}
+
+.cinematic-fade-in {
+  animation: cinematic-fade-in 2s ease-out forwards;
+}
+
+@keyframes cinematic-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Color utilities */
+.bg-primary-white {
+  background-color: var(--color-primary-white);
+}
+
+.bg-primary-black {
+  background-color: var(--color-primary-black);
+}
+
+.bg-charcoal {
+  background-color: var(--color-charcoal);
+}
+
+.bg-medium-grey {
+  background-color: var(--color-medium-grey);
+}
+
+.bg-light-grey {
+  background-color: var(--color-light-grey);
+}
+
+.bg-electric-blue {
+  background-color: var(--color-electric-blue);
+}
+
+.bg-warm-coral {
+  background-color: var(--color-warm-coral);
+}
+
+.bg-lime-green {
+  background-color: var(--color-lime-green);
+}
+
+.text-primary-white {
+  color: var(--color-primary-white);
+}
+
+.text-primary-black {
+  color: var(--color-primary-black);
+}
+
+.text-charcoal {
+  color: var(--color-charcoal);
+}
+
+.text-medium-grey {
+  color: var(--color-medium-grey);
+}
+
+.text-electric-blue {
+  color: var(--color-electric-blue);
+}
+
+.text-warm-coral {
+  color: var(--color-warm-coral);
+}
+
+.text-lime-green {
+  color: var(--color-lime-green);
+}
+
+.border-electric-blue {
+  border-color: var(--color-electric-blue);
+}
+
+.border-warm-coral {
+  border-color: var(--color-warm-coral);
+}
+
+.border-charcoal {
+  border-color: var(--color-charcoal);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-light-grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-medium-grey);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-charcoal);
+}
+
+/* Smooth Scrolling with Lenis */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: var(--color-electric-blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.custom-cursor.hover {
+  transform: scale(2);
+  background: var(--color-warm-coral);
+}
+
+/* Magnetic Effects */
+.magnetic {
+  transition: transform var(--transition-smooth);
+}
+
+.magnetic:hover {
+  transform: scale(1.05);
+}
+
+/* 3D Card Effects */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform var(--transition-smooth);
+}
+
+.card-3d:hover {
+  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+}
+
+/* Animated Grid Background */
+.grid-background {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Staggered Text Animation */
+.stagger-text > * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: stagger-in 0.6s ease-out forwards;
+}
+
+.stagger-text > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-text > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-text > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-text > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-text > *:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Morphing Border Animation */
+.morphing-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.morphing-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-warm-coral), var(--color-lime-green)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: border-rotate 3s linear infinite;
+}
+
+@keyframes border-rotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: clamp(2rem, 6vw, 4rem);
+  }
+  
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
 }
