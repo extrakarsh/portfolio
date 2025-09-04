@@ -155,7 +155,7 @@ export default function TestimonialsSection({ theme }: TestimonialsSectionProps)
             Client Love
           </h2>
           <p className="text-body text-medium-grey max-w-3xl mx-auto">
-            Don't just take my word for it. Here's what clients have to say 
+            Don&apos;t just take my word for it. Here&apos;s what clients have to say 
             about their experience working with Digital Craftsman.
           </p>
         </motion.div>
@@ -208,7 +208,7 @@ export default function TestimonialsSection({ theme }: TestimonialsSectionProps)
                   {/* Testimonial Content */}
                   <div className="mb-8">
                     <p className="text-lg text-charcoal leading-relaxed italic">
-                      "{testimonials[currentIndex].content}"
+                      &ldquo;{testimonials[currentIndex].content}&rdquo;
                     </p>
                   </div>
 
@@ -316,7 +316,7 @@ export default function TestimonialsSection({ theme }: TestimonialsSectionProps)
             Ready to Join the Success Stories?
           </h3>
           <p className="text-body text-medium-grey max-w-2xl mx-auto mb-8">
-            Let's create something amazing together. Your project could be the next 
+            Let&apos;s create something amazing together. Your project could be the next 
             success story featured here.
           </p>
           

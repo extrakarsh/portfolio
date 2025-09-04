@@ -108,9 +108,11 @@ export default function CustomCursor() {
       height: 40,
       width: 40,
       scale: 1,
-      backgroundColor: '#567C8D', // teal
+      backgroundColor: 'rgba(86, 124, 141, 0.8)', // teal with transparency
       borderRadius: '50%',
       filter: 'blur(0px)',
+      backdropFilter: 'blur(4px)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
     },
     link: {
       x: mousePosition.x - 25,
@@ -118,9 +120,11 @@ export default function CustomCursor() {
       height: 50,
       width: 50,
       scale: 1.2,
-      backgroundColor: '#C8D9E6', // sky-blue
+      backgroundColor: 'rgba(200, 217, 230, 0.8)', // sky-blue with transparency
       borderRadius: '50%',
       filter: 'blur(1px)',
+      backdropFilter: 'blur(6px)',
+      border: '1px solid rgba(255, 255, 255, 0.3)',
     },
     button: {
       x: mousePosition.x - 30,
@@ -128,9 +132,11 @@ export default function CustomCursor() {
       height: 60,
       width: 60,
       scale: 1.5,
-      backgroundColor: '#2F4156', // navy
+      backgroundColor: 'rgba(47, 65, 86, 0.8)', // navy with transparency
       borderRadius: '50%',
       filter: 'blur(2px)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(255, 255, 255, 0.4)',
     },
   };
 
@@ -173,8 +179,12 @@ export default function CustomCursor() {
         }}
       >
         <div 
-          className="w-6 h-6 bg-teal/60"
-          style={{ borderRadius: '50%' }}
+          className="w-6 h-6 rounded-full"
+          style={{ 
+            background: 'rgba(86, 124, 141, 0.6)',
+            backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}
         />
       </motion.div>
       
@@ -198,8 +208,12 @@ export default function CustomCursor() {
         }}
       >
         <div 
-          className="w-4 h-4 bg-sky-blue/40"
-          style={{ borderRadius: '50%' }}
+          className="w-4 h-4 rounded-full"
+          style={{ 
+            background: 'rgba(200, 217, 230, 0.4)',
+            backdropFilter: 'blur(3px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)'
+          }}
         />
       </motion.div>
       
@@ -216,7 +230,15 @@ export default function CustomCursor() {
           exit={{ scale: 0, opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="w-16 h-16 border-2 border-teal rounded-full" />
+          <div 
+            className="w-16 h-16 rounded-full"
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(8px)',
+              border: '2px solid rgba(86, 124, 141, 0.6)',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)'
+            }}
+          />
         </motion.div>
       )}
     </>

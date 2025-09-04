@@ -80,6 +80,15 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${inter.className} antialiased`}>
+        <div className="site-bg" aria-hidden="true">
+          <div className="mesh-layer">
+            <span className="blob b1" />
+            <span className="blob b2" />
+            <span className="blob b3" />
+          </div>
+          <div className="particles" />
+          <div className="noise" />
+        </div>
         {children}
       </body>
     </html>

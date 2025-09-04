@@ -9,23 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Custom Color Palette - Inspired by Flowblox Design
-        navy: '#2F4156',
-        teal: '#567C8D',
-        'sky-blue': '#C8D9E6',
-        beige: '#F5EFEB',
-        white: '#FFFFFF',
+        // New Color Palette
+        mirage: '#16232A',
+        'blaze-orange': '#FF5B04',
+        'deep-sea-green': '#075056',
+        'wild-sand': '#E4EEF0',
         // Legacy colors for compatibility
         primary: {
-          black: '#2F4156',
-          white: '#FFFFFF',
+          black: '#16232A',
+          white: '#E4EEF0',
         },
-        charcoal: '#2F4156',
-        'medium-grey': '#567C8D',
-        'light-grey': '#F5EFEB',
-        'electric-blue': '#567C8D',
-        'warm-coral': '#C8D9E6',
-        'lime-green': '#567C8D',
+        charcoal: '#16232A',
+        'medium-grey': '#075056',
+        'light-grey': '#E4EEF0',
+        'electric-blue': '#075056',
+        'warm-coral': '#FF5B04',
+        'lime-green': '#075056',
       },
       fontFamily: {
         'playfair': ['Playfair Display', 'serif'],

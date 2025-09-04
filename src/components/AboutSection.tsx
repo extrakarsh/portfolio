@@ -1,316 +1,219 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float } from '@react-three/drei';
-import { Code, Palette, Zap, Users, Clock, TrendingUp } from 'lucide-react';
-import * as THREE from 'three';
+import { useRef, useState, useEffect } from 'react';
+import { Code, Globe, Brain, Zap, GraduationCap, Award, BookOpen } from 'lucide-react';
+import { useIntersectionObserver } from '../hooks/useParallax';
 
-interface AboutSectionProps {
-  theme: 'designer' | 'automation';
-}
+export default function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const { elementRef: aboutRef, isIntersecting } = useIntersectionObserver(0.1);
 
-// 3D Skill Constellation Component
-function SkillConstellation({ theme }: { theme: 'designer' | 'automation' }) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  const skills = [
-    { name: 'React', position: [2, 2, 0], color: '#61dafb' },
-    { name: 'TypeScript', position: [-2, 1, 1], color: '#3178c6' },
-    { name: 'Three.js', position: [1, -1, 2], color: '#000000' },
-    { name: 'n8n', position: [-1, -2, 0], color: '#ff6b35' },
-    { name: 'Figma', position: [0, 2, -1], color: '#f24e1e' },
-    { name: 'Node.js', position: [2, -1, -1], color: '#339933' },
-    { name: 'Tailwind', position: [-2, -1, 1], color: '#06b6d4' },
-    { name: 'GSAP', position: [0, 0, 2], color: '#88ce02' },
+  // Education data from resume
+  const education = [
+    {
+      institution: "Canara Engineering College, Mangalore, India",
+      degree: "Bachelor of Engineering in Computer Science",
+      period: "2022 – Present",
+      grade: "CGPA: 8.19",
+      icon: GraduationCap
+    },
+    {
+      institution: "St. Philomena PU College, Puttur, India",
+      degree: "PUC (PCMB)",
+      period: "2020 – 2022",
+      grade: "Grade: 75%",
+      icon: BookOpen
+    },
+    {
+      institution: "Vivekananda English Medium School, Puttur, India",
+      degree: "SSLC",
+      period: "2010 – 2020",
+      grade: "Grade: 90%",
+      icon: Award
+    }
   ];
 
   useEffect(() => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = Math.PI / 6;
+    if (isIntersecting) {
+      setIsVisible(true);
     }
-  }, []);
+  }, [isIntersecting]);
 
-  return (
-    <group ref={groupRef}>
-      {/* Skill Nodes */}
-      {skills.map((skill, index) => (
-        <Float key={skill.name} speed={1 + index * 0.2} floatIntensity={0.5}>
-          <mesh position={skill.position as [number, number, number]}>
-            <sphereGeometry args={[0.3, 16, 16]} />
-            <meshBasicMaterial 
-              color={skill.color} 
-              transparent 
-              opacity={0.8}
-            />
-          </mesh>
-          
-          {/* Connection Lines */}
-          {index < skills.length - 1 && (
-            <line>
-              <bufferGeometry>
-                <bufferAttribute
-                  attach="attributes-position"
-                  args={[
-                    new Float32Array([
-                      ...skill.position,
-                      ...skills[(index + 1) % skills.length].position
-                    ]),
-                    3
-                  ]}
-                />
-              </bufferGeometry>
-              <lineBasicMaterial 
-                color={theme === 'designer' ? '#ff6b6b' : '#0066ff'} 
-                transparent 
-                opacity={0.3}
-              />
-            </line>
-          )}
-        </Float>
-      ))}
-    </group>
-  );
-}
-
-// Stats Component
-function StatCard({ icon: Icon, value, label, delay }: {
-  icon: any;
-  value: string;
-  label: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.6 }}
-      viewport={{ once: true }}
-      className="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg"
-    >
-      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-electric-blue to-warm-coral rounded-full flex items-center justify-center">
-        <Icon size={28} className="text-white" />
-      </div>
-      <div className="text-3xl font-bold text-charcoal mb-2">{value}</div>
-      <div className="text-medium-grey text-sm">{label}</div>
-    </motion.div>
-  );
-}
-
-export default function AboutSection({ theme }: AboutSectionProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
-
-  const stats = [
-    { icon: Clock, value: '5+', label: 'Years Experience' },
-    { icon: Users, value: '50+', label: 'Happy Clients' },
-    { icon: TrendingUp, value: '200+', label: 'Projects Completed' },
-    { icon: Zap, value: '100+', label: 'Workflows Automated' },
+  const interests = [
+    { icon: Code, title: 'Frontend Development', description: 'Building responsive, user-friendly interfaces with HTML, CSS, and JavaScript' },
+    { icon: Globe, title: 'React.js', description: 'Creating dynamic web applications with modern React practices' },
+    { icon: Brain, title: 'Problem Solving', description: 'Tackling complex challenges with creative and efficient solutions' },
+    { icon: Zap, title: 'Version Control', description: 'Collaborative development using Git and GitHub workflows' },
   ];
 
   return (
     <section 
       id="about"
       ref={containerRef}
-      className="relative py-section overflow-hidden"
-      style={{
-        background: theme === 'designer' 
-          ? 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)'
-          : 'linear-gradient(135deg, #f8fbff 0%, #ffffff 100%)'
-      }}
+      className="relative py-20 bg-white overflow-hidden"
     >
-      <div className="max-w-container mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
+        <div
+          ref={aboutRef as React.RefObject<HTMLDivElement>}
+          className={`text-center mb-16 transition-all duration-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
         >
-          <h2 className="font-playfair text-section font-bold mb-6">
-            The Intersection of Design & Automation
+          <h2 className="font-playfair text-4xl font-bold text-mirage mb-4">
+            About Me
           </h2>
-          <p className="text-body text-medium-grey max-w-3xl mx-auto">
-            I bridge the gap between creative design and technical automation, 
-            creating digital experiences that are both beautiful and efficient.
+          <p className="text-xl text-deep-sea-green max-w-3xl mx-auto">
+            A passionate Computer Science student with a foundation in frontend development 
+            and a drive to create innovative solutions that make a real impact.
           </p>
-        </motion.div>
+        </div>
+
+        {/* Education Section */}
+        <div className="mb-16">
+          <h3 className="font-playfair text-3xl font-bold text-mirage mb-8 text-center">
+            Education
+          </h3>
+          <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+            {education.map((edu, index) => {
+              const IconComponent = edu.icon;
+              return (
+                <div
+                  key={edu.institution}
+                  className={`p-6 rounded-2xl glass-card gradient-border transition-all duration-700 hover:scale-105 hover:-translate-y-2 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 200}ms` }}
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                      <IconComponent size={24} className="text-indigo-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-playfair text-lg font-semibold text-mirage">
+                        {edu.degree}
+                      </h4>
+                      <p className="text-sm text-mirage/70">{edu.period}</p>
+                    </div>
+                  </div>
+                  <p className="text-mirage font-medium mb-2">{edu.institution}</p>
+                  <p className="text-indigo-600 font-semibold">{edu.grade}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
           {/* Left Side - Personal Story */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-6"
+          <div
+            className={`space-y-6 transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+            }`}
+            style={{ transitionDelay: '400ms' }}
           >
-            <h3 className="font-playfair text-subtitle font-semibold text-charcoal">
+            <h3 className="font-playfair text-2xl font-semibold text-mirage">
               My Journey
             </h3>
             
             <div className="space-y-4">
-              <p className="text-body text-charcoal leading-relaxed">
-                I started as a web designer with a passion for creating beautiful, 
-                functional interfaces. But I quickly realized that the real magic 
-                happens when design meets automation.
+              <p className="text-navy leading-relaxed">
+                I&apos;m Akarsh Rai B, a Computer Science Engineering student at Canara Engineering College, 
+                Mangalore. With a CGPA of 8.19, I&apos;ve built a strong foundation in programming and 
+                problem-solving.
               </p>
               
-              <p className="text-body text-charcoal leading-relaxed">
-                Today, I specialize in building sophisticated web experiences 
-                and creating n8n workflows that transform how businesses operate. 
-                Every project is an opportunity to blend aesthetic excellence 
-                with technical innovation.
+              <p className="text-navy leading-relaxed">
+                My journey in tech started with basic programming concepts and has evolved into 
+                building responsive web applications using HTML, CSS, and JavaScript. I&apos;m particularly 
+                passionate about React.js and creating user-friendly interfaces.
               </p>
               
-              <p className="text-body text-charcoal leading-relaxed">
-                Whether it's a stunning portfolio website or a complex automation 
-                system, I approach each challenge with the same level of creativity 
-                and attention to detail.
+              <p className="text-navy leading-relaxed">
+                I believe in collaborative development and have experience with Git version control 
+                and team workflows. I&apos;m always eager to learn new technologies and contribute to 
+                meaningful projects.
               </p>
             </div>
+          </div>
 
-            {/* Skills List */}
-            <div className="grid grid-cols-2 gap-4 pt-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-warm-coral rounded-full" />
-                <span className="text-sm font-medium text-charcoal">UI/UX Design</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-electric-blue rounded-full" />
-                <span className="text-sm font-medium text-charcoal">Web Development</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-lime-green rounded-full" />
-                <span className="text-sm font-medium text-charcoal">n8n Workflows</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-warm-coral rounded-full" />
-                <span className="text-sm font-medium text-charcoal">Process Automation</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - 3D Skills Visualization */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="h-96 relative"
+          {/* Right Side - Visual Element */}
+          <div
+            className={`relative transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+            }`}
+            style={{ transitionDelay: '600ms' }}
           >
-            <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-              <ambientLight intensity={0.6} />
-              <pointLight position={[10, 10, 10]} intensity={0.8} />
-              <SkillConstellation theme={theme} />
-              <OrbitControls 
-                enableZoom={false} 
-                enablePan={false} 
-                autoRotate 
-                autoRotateSpeed={0.3}
-              />
-            </Canvas>
-            
-            {/* Overlay Text */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="text-center">
-                <div className="text-2xl font-playfair font-bold text-charcoal mb-2">
-                  Skills Constellation
-                </div>
-                <div className="text-sm text-medium-grey">
-                  Hover to explore connections
-                </div>
+            <div className="p-8 rounded-2xl glass-effect">
+              <div className="grid grid-cols-2 gap-6">
+                {interests.map((interest, index) => {
+                  const IconComponent = interest.icon;
+                  return (
+                    <div
+                      key={interest.title}
+                      className={`text-center p-4 rounded-xl bg-wild-sand/30 relative overflow-hidden transition-all duration-500 hover:scale-105 hover:-translate-y-2 ${
+                        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                      }`}
+                      style={{ transitionDelay: `${800 + index * 100}ms` }}
+                    >
+                      <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-indigo-100 flex items-center justify-center relative hover:scale-110 transition-transform duration-300">
+                        <IconComponent size={24} className="text-indigo-600" />
+                      </div>
+                      <h4 className="font-playfair text-sm font-semibold text-mirage mb-2">
+                        {interest.title}
+                      </h4>
+                      <p className="text-xs text-navy leading-tight">
+                        {interest.description}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
+        {/* Key Strengths */}
+        <div
+          className={`text-center transition-all duration-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+          style={{ transitionDelay: '800ms' }}
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <StatCard
-                key={stat.label}
-                icon={stat.icon}
-                value={stat.value}
-                label={stat.label}
-                delay={index * 0.1}
-              />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Automation Preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-20 p-8 bg-gradient-to-r from-electric-blue/10 to-warm-coral/10 rounded-3xl"
-        >
-          <div className="text-center mb-8">
-            <h3 className="font-playfair text-subtitle font-semibold text-charcoal mb-4">
-              Live n8n Workflow Preview
+          <div className="p-8 rounded-2xl glass-effect max-w-4xl mx-auto">
+            <h3 className="font-playfair text-2xl font-bold text-mirage mb-6">
+              What Drives Me
             </h3>
-            <p className="text-body text-medium-grey max-w-2xl mx-auto">
-              See how automation transforms complex processes into elegant, 
-              efficient workflows that save time and boost productivity.
-            </p>
-          </div>
-
-          {/* Workflow Animation Placeholder */}
-          <div className="relative h-64 bg-white/50 rounded-2xl overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
-                <Zap size={48} className="text-electric-blue mx-auto mb-4" />
-                <div className="text-lg font-medium text-charcoal mb-2">
-                  Workflow Visualization
-                </div>
-                <div className="text-sm text-medium-grey">
-                  Interactive n8n workflow demo coming soon
-                </div>
+                <h4 className="font-playfair text-lg font-semibold text-mirage mb-2">
+                  Problem Solving
+                </h4>
+                <p className="text-deep-sea-green text-sm">
+                  I love tackling complex challenges and finding elegant solutions
+                </p>
+              </div>
+              <div className="text-center">
+                <h4 className="font-playfair text-lg font-semibold text-mirage mb-2">
+                  Continuous Learning
+                </h4>
+                <p className="text-deep-sea-green text-sm">
+                  Always exploring new technologies and expanding my skill set
+                </p>
+              </div>
+              <div className="text-center">
+                <h4 className="font-playfair text-lg font-semibold text-mirage mb-2">
+                  Collaboration
+                </h4>
+                <p className="text-deep-sea-green text-sm">
+                  Working effectively in teams and contributing to shared goals
+                </p>
               </div>
             </div>
-            
-            {/* Animated Flow Lines */}
-            <div className="absolute inset-0">
-              <svg className="w-full h-full" viewBox="0 0 400 200">
-                <motion.path
-                  d="M 50 100 Q 200 50 350 100"
-                  stroke={theme === 'designer' ? '#ff6b6b' : '#0066ff'}
-                  strokeWidth="2"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                />
-                <motion.circle
-                  cx="50"
-                  cy="100"
-                  r="4"
-                  fill={theme === 'designer' ? '#ff6b6b' : '#0066ff'}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: [0, 1.5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                />
-              </svg>
-            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

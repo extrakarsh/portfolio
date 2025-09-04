@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Float } from '@react-three/drei';
 import { Zap, Clock, TrendingUp, DollarSign, ArrowRight, Play } from 'lucide-react';
@@ -63,6 +64,10 @@ function WorkflowNetwork({ theme }: { theme: 'designer' | 'automation' }) {
                 ...nodes[connection[1]].position
               ])}
               itemSize={3}
+              args={[new Float32Array([
+                ...nodes[connection[0]].position,
+                ...nodes[connection[1]].position
+              ]), 3]}
             />
           </bufferGeometry>
           <lineBasicMaterial 
@@ -75,21 +80,22 @@ function WorkflowNetwork({ theme }: { theme: 'designer' | 'automation' }) {
 
       {/* Data Flow Particles */}
       {connections.map((connection, index) => (
-        <motion.mesh
-          key={`particle-${index}`}
-          position={[
-            (nodes[connection[0]].position[0] + nodes[connection[1]].position[0]) / 2,
-            (nodes[connection[0]].position[1] + nodes[connection[1]].position[1]) / 2,
-            (nodes[connection[0]].position[2] + nodes[connection[1]].position[2]) / 2,
-          ]}
-        >
-          <sphereGeometry args={[0.05, 8, 8]} />
-          <meshBasicMaterial 
-            color={theme === 'designer' ? '#32d74b' : '#ff6b6b'} 
-            transparent 
-            opacity={0.6}
-          />
-        </motion.mesh>
+        <Float key={`particle-${index}`} speed={2 + index * 0.3} floatIntensity={0.2}>
+          <mesh
+            position={[
+              (nodes[connection[0]].position[0] + nodes[connection[1]].position[0]) / 2,
+              (nodes[connection[0]].position[1] + nodes[connection[1]].position[1]) / 2,
+              (nodes[connection[0]].position[2] + nodes[connection[1]].position[2]) / 2,
+            ]}
+          >
+            <sphereGeometry args={[0.05, 8, 8]} />
+            <meshBasicMaterial 
+              color={theme === 'designer' ? '#32d74b' : '#ff6b6b'} 
+              transparent 
+              opacity={0.6}
+            />
+          </mesh>
+        </Float>
       ))}
     </group>
   );
@@ -97,7 +103,7 @@ function WorkflowNetwork({ theme }: { theme: 'designer' | 'automation' }) {
 
 // ROI Card Component
 function ROICard({ icon: Icon, value, label, description, delay }: {
-  icon: any;
+  icon: React.ComponentType<{ size: number; className?: string }>;
   value: string;
   label: string;
   description: string;
@@ -128,7 +134,7 @@ function ROICard({ icon: Icon, value, label, description, delay }: {
 // Tech Stack Badge Component
 function TechBadge({ name, icon: Icon, color, delay }: {
   name: string;
-  icon: any;
+  icon: React.ComponentType<{ size: number; style?: React.CSSProperties }>;
   color: string;
   delay: number;
 }) {
@@ -154,13 +160,6 @@ function TechBadge({ name, icon: Icon, color, delay }: {
 
 export default function AutomationSection({ theme }: AutomationSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   const roiStats = [
     {

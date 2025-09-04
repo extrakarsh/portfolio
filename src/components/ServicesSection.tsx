@@ -11,7 +11,7 @@ interface Service {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: React.ComponentType<{ size: number; className?: string }>;
   features: string[];
   color: string;
   delay: number;
@@ -174,7 +174,7 @@ export default function ServicesSection({ theme }: ServicesSectionProps) {
           </h3>
           <p className="text-body text-medium-grey max-w-2xl mx-auto mb-6">
             Every project is unique, and I believe in providing custom solutions 
-            that fit your specific needs and budget. Let's discuss your project 
+            that fit your specific needs and budget. Let&apos;s discuss your project 
             and find the perfect approach.
           </p>
           

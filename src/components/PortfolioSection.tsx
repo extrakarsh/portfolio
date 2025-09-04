@@ -23,73 +23,29 @@ interface Project {
 const projects: Project[] = [
   {
     id: '1',
-    title: 'E-Commerce Platform',
-    category: 'Web Design',
-    description: 'Modern e-commerce experience with seamless user journey and conversion optimization.',
+    title: 'Wastix – Garbage Collection App',
+    category: 'Web Development',
+    description: 'Built a web app to connect waste producers and collectors with real-time scheduling, improving sustainability and communication.',
     image: '/api/placeholder/600/400',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Stripe'],
+    technologies: ['Web Development', 'Real-time Scheduling', 'Sustainability'],
     size: 'large',
     color: '#ff6b6b',
     link: '#'
   },
   {
     id: '2',
-    title: 'Brand Identity System',
-    category: 'Branding',
-    description: 'Comprehensive brand identity including logo, color palette, and design guidelines.',
+    title: 'Bone Age Detection with Deep Learning',
+    category: 'AI/ML',
+    description: 'Developing a deep learning model to automate growth disorder diagnosis using X-ray image analysis.',
     image: '/api/placeholder/400/300',
-    technologies: ['Figma', 'Adobe Illustrator', 'Brand Guidelines'],
+    technologies: ['Deep Learning', 'Computer Vision', 'Medical AI', 'Python'],
     size: 'medium',
     color: '#32d74b',
-    link: '#'
-  },
-  {
-    id: '3',
-    title: 'Mobile App UI/UX',
-    category: 'UI/UX',
-    description: 'Intuitive mobile app design focusing on user experience and accessibility.',
-    image: '/api/placeholder/300/400',
-    technologies: ['Figma', 'Prototyping', 'User Research'],
-    size: 'medium',
-    color: '#0066ff',
-    link: '#'
-  },
-  {
-    id: '4',
-    title: 'Corporate Website',
-    category: 'Web Design',
-    description: 'Professional corporate website with modern design and content management system.',
-    image: '/api/placeholder/400/300',
-    technologies: ['Next.js', 'Contentful', 'Tailwind CSS'],
-    size: 'small',
-    color: '#ff6b6b',
-    link: '#'
-  },
-  {
-    id: '5',
-    title: 'Product Landing Page',
-    category: 'Web Design',
-    description: 'High-converting landing page with compelling copy and strategic CTAs.',
-    image: '/api/placeholder/500/300',
-    technologies: ['HTML', 'CSS', 'JavaScript', 'A/B Testing'],
-    size: 'small',
-    color: '#32d74b',
-    link: '#'
-  },
-  {
-    id: '6',
-    title: 'Design System',
-    category: 'UI/UX',
-    description: 'Comprehensive design system with reusable components and documentation.',
-    image: '/api/placeholder/400/400',
-    technologies: ['Figma', 'Storybook', 'Design Tokens'],
-    size: 'large',
-    color: '#0066ff',
     link: '#'
   }
 ];
 
-const categories = ['All', 'Web Design', 'Branding', 'UI/UX'];
+const categories = ['All', 'Web Development', 'AI/ML'];
 
 export default function PortfolioSection({ theme }: PortfolioSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
