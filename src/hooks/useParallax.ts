@@ -8,9 +8,10 @@ interface ParallaxOptions {
   enabled?: boolean;
 }
 
+// Main fix: useRef<HTMLDivElement>(null)
 export function useParallax(options: ParallaxOptions = {}) {
   const { speed = 0.5, direction = 'up', enabled = true } = options;
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>();
 
   const updateParallax = useCallback(() => {
