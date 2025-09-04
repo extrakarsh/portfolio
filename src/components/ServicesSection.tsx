@@ -11,7 +11,7 @@ interface Service {
   id: string;
   title: string;
   description: string;
-  icon: React.ComponentType<{ size: number; className?: string }>;
+  icon: React.ComponentType<{ size: number; className?: string }>; 
   features: string[];
   color: string;
   delay: number;
@@ -104,7 +104,7 @@ export default function ServicesSection({ theme }: ServicesSectionProps) {
                 className="w-20 h-20 mb-6 rounded-2xl flex items-center justify-center"
                 style={{ backgroundColor: service.color + '20' }}
               >
-                <service.icon size={32} style={{ color: service.color }} />
+                <service.icon size={32} className={`{color:${service.color}}`} />
               </motion.div>
 
               {/* Service Content */}
